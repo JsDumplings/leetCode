@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Two Sum</title>
+</head>
+<body>
+	<h1>Two Sum</h1>
+	<div>
+		<label>请输入运算的方法(+,-,*,/):</label><br><input type="text"><br>
+		<label>请输入需要运算的整数(英文逗号相隔):</label><br><input type="text"><br>
+		<label>请输入可以得到的值:</label><br><input type="text"><br>
+		<button>运算</button>
+		<p></p>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+	/*Given nums = [2, 7, 11, 15], target = 9,
+	Because nums[0] + nums[1] = 2 + 7 = 9,
+	return [0, 1].*/
+	const btn =document.getElementsByTagName('button')[0];
+	const p =document.getElementsByTagName('p')[0];
+	btn.onclick = ()=>{
+		const symbol = document.getElementsByTagName('input')[0];
+		const num = document.getElementsByTagName('input')[1];
+		const target =document.getElementsByTagName('input')[2];
+		console.log(num.value.split(','));
+		const nums = num.value.split(",");
+		TwoSum(nums,target.value,symbol.value);
+	}
+	// const nums = [2,7,11,15],target = 13,symbol = '+';
+	function TwoSum(nums,target,symbol){
+		if(nums && target && symbol){
+			let sumArr = [];
+			for(let val of nums.values()){
+				let numsCopy=nums.filter(x=> x !== val);
+				for(let valCopy of numsCopy.values()){
+					// console.log(eval(valCopy+symbol+val));
+					let evalSum=eval(valCopy+symbol+val);
+					if(evalSum == target){
+						// console.log('该数组中可以相加求到target的两个值为：',val,valCopy);
+						sumArr.push([valCopy,val])
+					}
+				}
+			}
+			// return console.log('该数组中没有可以相加求到target的两个值')
+			console.log('sumArr',sumArr);
+			//remove all child Node
+			let childs = p.childNodes;
+			for(let i = childs.length-1; i>=0;i--){
+				p.removeChild(childs[i]);
+			}
+			if(sumArr.length){ //if yes;show the ways
+				for(let showVal of sumArr.values()){
+					let span = document.createElement("span");
+					span.innerHTML = `${showVal}<br>`;
+					p.appendChild(span);
+				}
+			}else{
+				let span = document.createElement("span");
+				span.innerHTML = `得不到该值！`;
+				p.appendChild(span);
+			}
+		}else{
+			let span = document.createElement("span");
+			span.innerHTML = `输入框不能为空！`;
+			p.appendChild(span);
+		}
+	}
+</script>
